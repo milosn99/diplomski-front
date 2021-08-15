@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
@@ -10,31 +11,38 @@ import ProjectEdit from "./components/ProjectEdit";
 import ProjectInfo from "./components/ProjectInfo";
 import StudentProfile from "./components/StudentProfile";
 
+const useStyles = makeStyles((theme) => ({
+  content: {
+    marginTop: "5%",
+  },
+}));
+
 function App() {
+  const classes = useStyles();
   return (
     <Router>
       {localStorage.getItem("token") && <Navbar />}
-      <div className='content'>
+      <div>
         <Switch>
-          <Route exact path='/'>
+          <Route exact path="/">
             {localStorage.getItem("token") ? <Dashboard /> : <Login />}
           </Route>
-          <Route exact path='/posts/new'>
+          <Route exact path="/posts/new">
             <NewPost />
           </Route>
-          <Route exact path='/me'>
+          <Route exact path="/me">
             <Profile />
           </Route>
-          <Route exact path='/edit'>
+          <Route exact path="/edit">
             <EditProfile />
           </Route>
-          <Route exact path='/project/:id'>
+          <Route exact path="/project/:id">
             <ProjectInfo />
           </Route>
-          <Route exact path='/project/:id/edit'>
+          <Route exact path="/project/:id/edit">
             <ProjectEdit />
           </Route>
-          <Route exact path='/student/:id'>
+          <Route exact path="/student/:id">
             <StudentProfile />
           </Route>
         </Switch>
