@@ -4,7 +4,6 @@ import Zoom from "@material-ui/core/Zoom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Post from "./Post";
 import getUser from "../helper/getUser";
 import UserCard from "./UserCard";
 import Feed from "./Feed";
@@ -53,18 +52,20 @@ function Dashboard() {
 
   return (
     <div className={classes.wrap}>
-      <Zoom in timeout={500} unmountOnExit>
-        <Fab
-          color='primary'
-          aria-label='add'
-          onClick={handleFabClick}
-          className={classes.fab}
-        >
-          <AddIcon />
-        </Fab>
-      </Zoom>
+      {user.userType === "student" && (
+        <Zoom in timeout={500} unmountOnExit>
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={handleFabClick}
+            className={classes.fab}
+          >
+            <AddIcon />
+          </Fab>
+        </Zoom>
+      )}
 
-      <Grid container component='main' classname={classes.content}>
+      <Grid container component="main" classname={classes.content}>
         <CssBaseline />
         <Grid item xs={4}>
           <UserCard user={user} />

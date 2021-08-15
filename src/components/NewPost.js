@@ -1,4 +1,4 @@
-import { Button, IconButton, makeStyles } from "@material-ui/core";
+import { Button, IconButton, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import axios from "axios";
@@ -14,6 +14,7 @@ export default function NewPost() {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = useState(null);
   const history = useHistory();
+  const [content, setContent] = useState("");
 
   const handleUploadClick = async (e) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ export default function NewPost() {
 
     let result = await axios.post(
       "/api/posts/add",
-      { content: "Tekst objave" },
+      { content: content },
       config
     );
 
@@ -37,8 +38,6 @@ export default function NewPost() {
         "x-auth-token": localStorage.getItem("token"),
       },
     };
-
-    // console.log(result);
 
     result = await axios.put(
       `/api/posts/photo/${result.data._id}`,
@@ -53,27 +52,41 @@ export default function NewPost() {
 
   return (
     <div>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="content"
+        multiline
+        maxRows={4}
+        label="Enter post content"
+        name="content"
+        autoComplete="content"
+        autoFocus
+        onChange={(e) => setContent(e.target.value)}
+      />
       <input
-        accept='image/*'
+        accept="image/*"
         className={classes.input}
-        id='thumbnail'
-        name='thumbnail'
-        type='file'
+        id="thumbnail"
+        name="thumbnail"
+        type="file"
         onChange={(e) => {
           setSelectedFile(e.target.files[0]);
         }}
       />
-      <label htmlFor='thumbnail'>
+      <label htmlFor="thumbnail">
         <IconButton
-          color='primary'
-          aria-label='upload picture'
-          component='span'
+          color="primary"
+          aria-label="upload picture"
+          component="span"
         >
           <PhotoCamera />
         </IconButton>
       </label>
-      <Button variant='contained' color='primary' onClick={handleUploadClick}>
-        Posalji
+      <Button variant="contained" color="primary" onClick={handleUploadClick}>
+        Post
       </Button>
     </div>
   );
