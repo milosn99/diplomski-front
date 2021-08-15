@@ -18,12 +18,12 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='textSecondary' align='center'>
+    <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © Milos Ninkovic"} {new Date().getFullYear()}
     </Typography>
   );
@@ -83,7 +83,7 @@ export default function Login() {
   };
 
   return (
-    <Grid container component='main' className={classes.root}>
+    <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -92,41 +92,41 @@ export default function Login() {
           autoHideDuration={3000}
           onClose={() => setBadLogin(false)}
         >
-          <Alert severity='error'>{message}</Alert>
+          <Alert severity="error">{message}</Alert>
         </Snackbar>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component="h1" variant="h5">
             Log in
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <FormControl>
-              <InputLabel htmlFor='type-native-helper'>Type</InputLabel>
+              <InputLabel htmlFor="type-native-helper">Type</InputLabel>
               <NativeSelect
                 required
                 fullWidth
@@ -139,7 +139,7 @@ export default function Login() {
                   id: "type-native-helper",
                 }}
               >
-                <option aria-label='None' value='' />
+                <option aria-label="None" value="" />
                 <option value={"students"}>Student</option>
                 <option value={"professors"}>Professor</option>
                 <option value={"recruiters"}>Recruiter</option>
@@ -147,10 +147,10 @@ export default function Login() {
               <FormHelperText>Choose type of user</FormHelperText>
             </FormControl>
             <Button
-              type='submit'
+              type="submit"
               fullWidth
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               className={classes.submit}
             >
               Log in
