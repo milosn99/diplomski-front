@@ -40,6 +40,10 @@ function Navbar(props) {
     window.location.reload(false);
   };
 
+  const handleEdit = () => {
+    history.push("/edit");
+  };
+
   return (
     <div className>
       <AppBar position="fixed" className={classes.navbar}>
@@ -58,7 +62,7 @@ function Navbar(props) {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Edit profile</MenuItem>
+            <MenuItem onClick={handleEdit}>Edit profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>

@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  Divider,
   makeStyles,
   Paper,
   Typography,
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   userText: {
     paddingTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -63,7 +65,7 @@ export default function Post(props) {
           className={classes.large}
         />
         <Typography
-          color='textSecondary'
+          color="textSecondary"
           gutterBottom
           className={classes.userText}
           onClick={handleUserNameClick}
@@ -71,16 +73,18 @@ export default function Post(props) {
           {props.user.name}
         </Typography>
         <Typography
-          color='textSecondary'
+          color="textSecondary"
           gutterBottom
           className={classes.userText}
         >
           {time}
         </Typography>
       </div>
-      <Typography color='text2' gutterBottom>
+      <Divider />
+      <Typography color="text2" gutterBottom>
         {props.data.content}
       </Typography>
+
       {props.data.thumbnail ? (
         <img
           src={props.data.thumbnail}

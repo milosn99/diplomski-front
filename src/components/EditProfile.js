@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
@@ -99,6 +98,11 @@ function EditProfile(props) {
     }
   };
 
+  const handleAddProject = (e) => {
+    e.preventDefault();
+    history.push("/projects/new");
+  };
+
   const handleUpdateStudent = async (e) => {
     e.preventDefault();
     let config = {
@@ -123,7 +127,7 @@ function EditProfile(props) {
         >
           <Alert severity={severity}>{message}</Alert>
         </Snackbar>
-        <List component='nav' aria-label='secondary mailbox folders'>
+        <List component="nav" aria-label="secondary mailbox folders">
           {user.skills.map((skill) => {
             return (
               <Chip
@@ -139,55 +143,44 @@ function EditProfile(props) {
           })}
         </List>
         <TextField
-          variant='outlined'
-          margin='normal'
-          id='skill'
-          label='Add skill'
-          name='skill'
-          autoComplete='skill'
+          variant="outlined"
+          margin="normal"
+          id="skill"
+          label="Add skill"
+          name="skill"
+          autoComplete="skill"
           value={skillToAdd}
           onChange={(e) => setSkill(e.target.value)}
         />
         <Button
-          type='submit'
+          type="submit"
           fullWidth
-          variant='contained'
-          color='primary'
+          variant="contained"
+          color="primary"
           className={classes.submit}
           onClick={handleAddSkill}
         >
           Add skill
         </Button>
-        <Button
-          type='submit'
-          fullWidth
-          variant='outlined'
-          color='primary'
-          className={classes.submit}
-          onClick={handleUpdateStudent}
-        >
-          Save student
-        </Button>
       </div>
-      <Divider />
       <div lassName={classes.root}>
-        <Button variant='outlined' color='primary' onClick={handleClickOpen}>
-          Edit projects
+        <Button variant="outlined" color="primary" onClick={handleAddProject}>
+          Add new project
         </Button>
         <Dialog open={projectDialogOpen} onClose={handleClose}>
           <DialogTitle>Choose a project</DialogTitle>
           <DialogContent>
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
-                <InputLabel id='demo-dialog-select-label'>Project</InputLabel>
+                <InputLabel id="demo-dialog-select-label">Project</InputLabel>
                 <Select
-                  labelId='demo-dialog-select-label'
-                  id='demo-dialog-select'
+                  labelId="demo-dialog-select-label"
+                  id="demo-dialog-select"
                   value={project}
                   onChange={handleChange}
                   input={<Input />}
                 >
-                  <MenuItem value=''>
+                  <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
                   {user.projects.map((item) => {
@@ -198,15 +191,28 @@ function EditProfile(props) {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color='primary'>
+            <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleEditProject} color='primary'>
+            <Button onClick={handleEditProject} color="primary">
               Edit
             </Button>
           </DialogActions>
         </Dialog>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          Edit an existing project
+        </Button>
       </div>
+      <Button
+        type="submit"
+        fullWidth
+        variant="outlined"
+        color="primary"
+        className={classes.submit}
+        onClick={handleUpdateStudent}
+      >
+        Save changes
+      </Button>
     </div>
   );
 }
