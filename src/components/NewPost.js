@@ -59,7 +59,7 @@ export default function NewPost() {
         fullWidth
         id="content"
         multiline
-        maxRows={4}
+        maxRows={20}
         label="Enter post content"
         name="content"
         autoComplete="content"

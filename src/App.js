@@ -6,6 +6,7 @@ import EditProfile from "./components/EditProfile";
 import Login from "./components/Login.js";
 import Navbar from "./components/Navbar";
 import NewPost from "./components/NewPost.js";
+import NewProject from "./components/NewProject";
 import Profile from "./components/Profile";
 import ProjectEdit from "./components/ProjectEdit";
 import ProjectInfo from "./components/ProjectInfo";
@@ -44,6 +45,9 @@ function App() {
           </Route>
           <Route exact path="/student/:id">
             <StudentProfile />
+          </Route>
+          <Route exact path="/projects/new">
+            <NewProject />
           </Route>
         </Switch>
       </div>
