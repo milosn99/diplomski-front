@@ -65,17 +65,17 @@ function StudentCard(props) {
         <CardContent>
           <Typography
             className={classes.title}
-            color='textSecondary'
+            color="textSecondary"
             gutterBottom
           >
             {props.user.name}
           </Typography>
-          <Typography variant='body2' className={classes.headline}>
+          <Typography variant="body2" className={classes.headline}>
             {props.user.headline}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant='contained' onClick={handleClick} size='small'>
+          <Button variant="contained" onClick={handleClick} size="small">
             Visit profile
           </Button>
         </CardActions>
