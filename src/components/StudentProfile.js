@@ -1,10 +1,14 @@
+import { Button } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import getType from "../helper/getType";
 
 function StudentProfile() {
-  const [user, setUser] = useState({});
+  const [student, setStudent] = useState({});
   const { id } = useParams();
+  const [type, setType] = useState("");
+
   const getUser = async (setUser) => {
     let config = {
       headers: {
@@ -18,10 +22,36 @@ function StudentProfile() {
   };
 
   useEffect(() => {
-    getUser(setUser);
+    getType(setType);
+    getUser(setStudent);
   }, []);
 
-  return <div>{user.name}</div>;
+  const handleApprove = async (e) => {
+    e.preventDefault();
+    let config = {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    };
+
+    await axios.put(
+      `/api/professors/students`,
+      { student: { _id: student._id, name: student.name } },
+      config
+    );
+  };
+
+  return (
+    <div>
+      {type === "professor" ? (
+        <Button variant='outlined' color='primary' onClick={handleApprove}>
+          Approve student
+        </Button>
+      ) : (
+        ""
+      )}
+    </div>
+  );
 }
 
 export default StudentProfile;

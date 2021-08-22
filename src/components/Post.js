@@ -65,7 +65,7 @@ export default function Post(props) {
           className={classes.large}
         />
         <Typography
-          color="textSecondary"
+          color='textSecondary'
           gutterBottom
           className={classes.userText}
           onClick={handleUserNameClick}
@@ -73,7 +73,7 @@ export default function Post(props) {
           {props.user.name}
         </Typography>
         <Typography
-          color="textSecondary"
+          color='textSecondary'
           gutterBottom
           className={classes.userText}
         >
@@ -81,7 +81,7 @@ export default function Post(props) {
         </Typography>
       </div>
       <Divider />
-      <Typography color="text2" gutterBottom>
+      <Typography color='text2' gutterBottom>
         {props.data.content}
       </Typography>
 

@@ -4,6 +4,7 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import EditProfile from "./components/EditProfile";
 import Login from "./components/Login.js";
+import Messenger from "./components/Messenger";
 import Navbar from "./components/Navbar";
 import NewPost from "./components/NewPost.js";
 import NewProject from "./components/NewProject";
@@ -25,29 +26,32 @@ function App() {
       {localStorage.getItem("token") && <Navbar />}
       <div>
         <Switch>
-          <Route exact path="/">
+          <Route exact path='/'>
             {localStorage.getItem("token") ? <Dashboard /> : <Login />}
           </Route>
-          <Route exact path="/posts/new">
+          <Route exact path='/posts/new'>
             <NewPost />
           </Route>
-          <Route exact path="/me">
+          <Route exact path='/me'>
             <Profile />
           </Route>
-          <Route exact path="/edit">
+          <Route exact path='/edit'>
             <EditProfile />
           </Route>
-          <Route exact path="/project/:id">
+          <Route exact path='/project/:id'>
             <ProjectInfo />
           </Route>
-          <Route exact path="/project/:id/edit">
+          <Route exact path='/project/:id/edit'>
             <ProjectEdit />
           </Route>
-          <Route exact path="/student/:id">
+          <Route exact path='/student/:id'>
             <StudentProfile />
           </Route>
-          <Route exact path="/projects/new">
+          <Route exact path='/projects/new'>
             <NewProject />
+          </Route>
+          <Route exact path='/messenger'>
+            <Messenger />
           </Route>
         </Switch>
       </div>

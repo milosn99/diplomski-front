@@ -26,5 +26,16 @@ export default function ProjectInfo() {
     getProject(id);
   }, []);
 
-  return <div>{project.name + " " + project.owner.name} </div>;
+  return (
+    <div>
+      {project.name + " " + project.owner.name}{" "}
+      {type === "professor" ? (
+        <Button variant='outlined' color='primary' onClick={handleApprove}>
+          Approve student
+        </Button>
+      ) : (
+        ""
+      )}
+    </div>
+  );
 }

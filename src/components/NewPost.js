@@ -39,13 +39,16 @@ export default function NewPost() {
       },
     };
 
+    if (!selectedFile) {
+      history.push("/");
+      return;
+    }
+
     result = await axios.put(
       `/api/posts/photo/${result.data._id}`,
       data,
       config
     );
-
-    console.log(result);
 
     history.push("/");
   };
@@ -53,39 +56,39 @@ export default function NewPost() {
   return (
     <div>
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         required
         fullWidth
-        id="content"
+        id='content'
         multiline
         maxRows={20}
-        label="Enter post content"
-        name="content"
-        autoComplete="content"
+        label='Enter post content'
+        name='content'
+        autoComplete='content'
         autoFocus
         onChange={(e) => setContent(e.target.value)}
       />
       <input
-        accept="image/*"
+        accept='image/*'
         className={classes.input}
-        id="thumbnail"
-        name="thumbnail"
-        type="file"
+        id='thumbnail'
+        name='thumbnail'
+        type='file'
         onChange={(e) => {
           setSelectedFile(e.target.files[0]);
         }}
       />
-      <label htmlFor="thumbnail">
+      <label htmlFor='thumbnail'>
         <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          color='primary'
+          aria-label='upload picture'
+          component='span'
         >
           <PhotoCamera />
         </IconButton>
       </label>
-      <Button variant="contained" color="primary" onClick={handleUploadClick}>
+      <Button variant='contained' color='primary' onClick={handleUploadClick}>
         Post
       </Button>
     </div>
