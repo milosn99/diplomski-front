@@ -1,11 +1,82 @@
-import { Button, Typography, TextField } from "@material-ui/core";
+import { Button, Typography, TextField, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import ChatOnline from "./ChatOnline";
 import Conversation from "./Conversation";
 import Message from "./Message";
-import "./messenger.css";
+
+const useStyles = makeStyles((theme) => ({
+  messenger: {
+    height: "calc(100vh-70px)",
+    display: "flex",
+  },
+  chatMenu: {
+    flex: 3.5,
+  },
+  chatMenuInput: {
+    width: "90%",
+    padding: "10px 0",
+    border: "none",
+    borderRadius: "1px solid gray",
+  },
+  chatBox: {
+    flex: 5.5,
+  },
+  chatBoxWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    position: "relative",
+  },
+  chatBoxTop: {
+    height: "100%",
+    overflowY: "scroll",
+    paddingRight: theme.spacing(0.5),
+  },
+  chatBoxBottom: {
+    marginTop: theme.spacing(0.25),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  chatMessageInput: {
+    width: "80%",
+    height: "90px",
+    padding: theme.spacing(0.5),
+  },
+  chatSubmitButton: {
+    width: theme.spacing(3.5),
+    height: theme.spacing(2),
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    // backgroundColor: "teal",
+    color: "white",
+  },
+  chatOnline: {
+    flex: 3,
+  },
+  chatMenuWrapper: {
+    padding: theme.spacing(0.5),
+    height: "100%",
+  },
+  chatBoxWrapper: {
+    padding: theme.spacing(0.5),
+    height: "100%",
+  },
+  chatOnlineWrapper: {
+    padding: theme.spacing(0.5),
+    height: "100%",
+  },
+  noConversationText: {
+    position: "absolute",
+    top: "10%",
+    fontSize: "3rem",
+    color: "rgb(224,220,220)",
+    cursor: "default",
+  },
+}));
 
 function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -18,6 +89,7 @@ function Messenger() {
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef();
   const scrollRef = useRef();
+  const classes = useStyles();
 
   useEffect(() => {
     const getUser = async () => {
@@ -139,9 +211,9 @@ function Messenger() {
 
   return (
     <div>
-      <div className='messenger'>
-        <div className='chatMenu'>
-          <div className='chatMenuWrapper'>
+      <div className={classes.messenger}>
+        <div className={classes.chatMenu}>
+          <div className={classes.chatMenuWrapper}>
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />
@@ -149,20 +221,20 @@ function Messenger() {
             ))}
           </div>
         </div>
-        <div className='chatBox'>
-          <div className='chatBoxWrapper'>
+        <div className={classes.chatBox}>
+          <div className={classes.chatBoxWrapper}>
             {currentChat ? (
               <>
-                <div className='chatBoxTop'>
+                <div className={classes.chatBoxTop}>
                   {messages.map((m) => (
                     <div ref={scrollRef}>
                       <Message message={m} own={m?.sender._id === user._id} />
                     </div>
                   ))}
                 </div>
-                <div className='chatBoxBottom'>
+                <div className={classes.chatBoxBottom}>
                   <TextField
-                    className='chatMessageInput'
+                    className={classes.chatMessageInput}
                     variant='outlined'
                     margin='normal'
                     id='newMessage'
@@ -176,21 +248,21 @@ function Messenger() {
                     variant='contained'
                     color='primary'
                     onClick={handleSubmit}
-                    className='chatSubmitButton'
+                    className={classes.chatSubmitButton}
                   >
                     Send
                   </Button>
                 </div>
               </>
             ) : (
-              <Typography className='noConversationText'>
+              <Typography className={classes.noConversationText}>
                 Open a conversation to start a chat.
               </Typography>
             )}
           </div>
         </div>
-        <div className='chatOnline'>
-          <div className='chatOnlineWrapper'>
+        <div className={classes.chatOnline}>
+          <div className={classes.chatOnlineWrapper}>
             <ChatOnline
               onlineUsers={onlineUsers}
               currentId={user?._id}

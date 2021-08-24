@@ -12,26 +12,40 @@ export default function ProjectInfo() {
     mentors: [],
   });
 
-  const getProject = async (id) => {
+  useEffect(() => {
+    const getProject = async (id) => {
+      let config = {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      };
+      const result = await axios.get(`/api/projects/${id}`, config);
+      setProject(result.data);
+    };
+    getProject(id);
+  }, []);
+
+  const handleApprove = async (e) => {
+    e.preventDefault();
     let config = {
       headers: {
         "x-auth-token": localStorage.getItem("token"),
       },
     };
-    const result = await axios.get(`/api/projects/${id}`, config);
-    setProject(result.data);
-  };
 
-  useEffect(() => {
-    getProject(id);
-  }, []);
+    await axios.put(
+      `/api/professors/projects`,
+      { project: { _id: project._id, name: project.name } },
+      config
+    );
+  };
 
   return (
     <div>
       {project.name + " " + project.owner.name}{" "}
       {type === "professor" ? (
         <Button variant='outlined' color='primary' onClick={handleApprove}>
-          Approve student
+          I mentored this project
         </Button>
       ) : (
         ""
