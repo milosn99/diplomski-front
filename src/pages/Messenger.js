@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     position: "relative",
+    marginTop: theme.spacing(1),
     padding: theme.spacing(0.5),
-    height: "100%",
+    height: "90vh",
   },
   chatBoxTop: {
     height: "100%",
