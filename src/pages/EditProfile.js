@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   FormControl,
   Input,
   InputLabel,
@@ -136,7 +135,7 @@ function EditProfile(props) {
                   let temp = new Object(user);
                   temp.skills.splice(temp.skills.indexOf(skill), 1);
                   setUser(temp);
-                  setHelper(helper == 0 ? 1 : 0);
+                  setHelper(helper === 0 ? 1 : 0);
                 }}
               />
             );

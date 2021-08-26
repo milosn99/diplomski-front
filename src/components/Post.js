@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Button,
   Divider,
   makeStyles,
   Paper,
@@ -87,6 +86,7 @@ export default function Post(props) {
 
       {props.data.thumbnail ? (
         <img
+          alt={""}
           src={props.data.thumbnail}
           width={300}
           className={classes.thumbnail}

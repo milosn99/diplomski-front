@@ -24,7 +24,7 @@ export default function ProjectEdit() {
 
   useEffect(() => {
     getProject(id);
-  }, []);
+  }, [id]);
 
   const handleEditProject = async () => {
     let config = {

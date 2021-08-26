@@ -2,9 +2,9 @@ import { Button, Typography, TextField, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-import ChatOnline from "./ChatOnline";
-import Conversation from "./Conversation";
-import Message from "./Message";
+import ChatOnline from "../components/ChatOnline";
+import Conversation from "../components/Conversation";
+import Message from "../components/Message";
 
 const useStyles = makeStyles((theme) => ({
   messenger: {
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     position: "relative",
+    padding: theme.spacing(0.5),
+    height: "100%",
   },
   chatBoxTop: {
     height: "100%",
@@ -51,17 +53,12 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-    // backgroundColor: "teal",
     color: "white",
   },
   chatOnline: {
     flex: 3,
   },
   chatMenuWrapper: {
-    padding: theme.spacing(0.5),
-    height: "100%",
-  },
-  chatBoxWrapper: {
     padding: theme.spacing(0.5),
     height: "100%",
   },
@@ -145,7 +142,7 @@ function Messenger() {
         available.filter((f) => users.some((u) => u.userId === f._id))
       );
     });
-  }, [user]);
+  }, [user, available]);
 
   useEffect(() => {
     const getConversations = async () => {

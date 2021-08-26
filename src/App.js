@@ -1,26 +1,18 @@
-import { makeStyles } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./components/Dashboard";
-import EditProfile from "./components/EditProfile";
-import Login from "./components/Login.js";
-import Messenger from "./components/Messenger";
+import Dashboard from "./pages/Dashboard";
+import EditProfile from "./pages/EditProfile";
+import Login from "./pages/Login.js";
+import Messenger from "./pages/Messenger";
 import Navbar from "./components/Navbar";
-import NewPost from "./components/NewPost.js";
-import NewProject from "./components/NewProject";
-import Profile from "./components/Profile";
-import ProjectEdit from "./components/ProjectEdit";
-import ProjectInfo from "./components/ProjectInfo";
-import StudentProfile from "./components/StudentProfile";
-
-const useStyles = makeStyles((theme) => ({
-  content: {
-    marginTop: "5%",
-  },
-}));
+import NewPost from "./pages/NewPost.js";
+import NewProject from "./pages/NewProject";
+import Profile from "./pages/Profile";
+import ProjectEdit from "./pages/ProjectEdit";
+import ProjectInfo from "./pages/ProjectInfo";
+import StudentProfile from "./pages/StudentProfile";
 
 function App() {
-  const classes = useStyles();
   return (
     <Router>
       {localStorage.getItem("token") && <Navbar />}

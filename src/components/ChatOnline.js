@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "@material-ui/core";
+import { Avatar, makeStyles, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
-  const [friends, setFriends] = useState([]);
   const [available, setAvailable] = useState([]);
   const classes = useStyles();
 

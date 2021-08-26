@@ -2,9 +2,8 @@ import { CssBaseline, Grid, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import getUser from "../helper/getUser";
-import Feed from "./Feed";
-import UserCard from "./UserCard";
-import UserInfo from "./UserInfo";
+import Feed from "../components/Feed";
+import UserInfo from "../components/UserInfo";
 
 const useStyles = makeStyles((theme) => ({
   feed: {
@@ -38,7 +37,7 @@ function Profile() {
 
   return (
     <div>
-      <Grid container component="main" classname={classes.content}>
+      <Grid container component='main' classname={classes.content}>
         <CssBaseline />
         <Grid item xs={1}></Grid>
         <Grid item xs={5}>

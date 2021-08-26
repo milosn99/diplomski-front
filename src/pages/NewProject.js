@@ -40,7 +40,7 @@ function NewProject() {
       let temp = new Object(project);
       temp.contributors.push(e.target.value);
       setProject(temp);
-      setHelper(helper == 0 ? 1 : 0);
+      setHelper(helper === 0 ? 1 : 0);
     }
   };
 
@@ -61,50 +61,50 @@ function NewProject() {
   return (
     <div>
       <TextField
-        variant="outlined"
-        margin="normal"
-        id="name"
-        label="Name"
-        name="name"
-        autoComplete="name"
+        variant='outlined'
+        margin='normal'
+        id='name'
+        label='Name'
+        name='name'
+        autoComplete='name'
         value={project.name}
         onChange={(e) => {
           let temp = new Object(project);
           temp.name = e.target.value;
           setProject(temp);
-          setHelper(helper == 0 ? 1 : 0);
+          setHelper(helper === 0 ? 1 : 0);
         }}
       />
       <br />{" "}
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         required
         fullWidth
-        id="content"
+        id='content'
         multiline
         maxRows={3}
-        label="Description"
-        name="content"
-        autoComplete="content"
+        label='Description'
+        name='content'
+        autoComplete='content'
         autoFocus
         onChange={(e) => {
           let temp = new Object(project);
           temp.description = e.target.value;
           setProject(temp);
-          setHelper(helper == 0 ? 1 : 0);
+          setHelper(helper === 0 ? 1 : 0);
         }}
       />
       <br />
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-dialog-select-label">Add contributor</InputLabel>
+        <InputLabel id='demo-dialog-select-label'>Add contributor</InputLabel>
         <Select
-          labelId="demo-dialog-select-label"
-          id="demo-dialog-select"
+          labelId='demo-dialog-select-label'
+          id='demo-dialog-select'
           input={<Input />}
           onChange={handleAddContributor}
         >
-          <MenuItem value="">
+          <MenuItem value=''>
             <em>None</em>
           </MenuItem>
           {students.map((item) => {
@@ -112,7 +112,7 @@ function NewProject() {
           })}
         </Select>
       </FormControl>
-      <List component="nav" aria-label="secondary mailbox folders">
+      <List component='nav' aria-label='secondary mailbox folders'>
         {project.contributors.map((item) => {
           return (
             <Chip
@@ -121,31 +121,31 @@ function NewProject() {
                 let temp = new Object(project);
                 temp.contributors.splice(temp.contributors.indexOf(item), 1);
                 setProject(temp);
-                setHelper(helper == 0 ? 1 : 0);
+                setHelper(helper === 0 ? 1 : 0);
               }}
             />
           );
         })}
       </List>
       <TextField
-        variant="outlined"
-        margin="normal"
-        id="skill"
-        label="Add skill"
-        name="skill"
-        autoComplete="skill"
+        variant='outlined'
+        margin='normal'
+        id='skill'
+        label='Add skill'
+        name='skill'
+        autoComplete='skill'
         value={techToAdd}
         onChange={(e) => setTech(e.target.value)}
       />
       <Button
-        type="submit"
-        variant="contained"
-        color="primary"
+        type='submit'
+        variant='contained'
+        color='primary'
         onClick={handleAddTech}
       >
         Add technology
       </Button>
-      <List component="nav" aria-label="secondary mailbox folders">
+      <List component='nav' aria-label='secondary mailbox folders'>
         {project.technologies.map((technology) => {
           return (
             <Chip
@@ -157,7 +157,7 @@ function NewProject() {
                   1
                 );
                 setProject(temp);
-                setHelper(helper == 0 ? 1 : 0);
+                setHelper(helper === 0 ? 1 : 0);
               }}
             />
           );
@@ -165,9 +165,9 @@ function NewProject() {
       </List>
       <Button
         fullWidth
-        type="submit"
-        variant="outlined"
-        color="primary"
+        type='submit'
+        variant='outlined'
+        color='primary'
         onClick={async (e) => {
           let config = {
             headers: {
@@ -175,11 +175,7 @@ function NewProject() {
             },
           };
 
-          let result = await axios.post(
-            "/api/projects/add",
-            { project: project },
-            config
-          );
+          await axios.post("/api/projects/add", { project: project }, config);
 
           history.push("/");
         }}

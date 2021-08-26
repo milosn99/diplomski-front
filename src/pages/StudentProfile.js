@@ -1,29 +1,29 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import getType from "../helper/getType";
 
-export default function ProjectInfo() {
+function StudentProfile() {
+  const [student, setStudent] = useState({});
   const { id } = useParams();
-  const [project, setProject] = useState({
-    owner: {},
-    contributors: [],
-    technologies: [],
-    mentors: [],
-  });
+  const [type, setType] = useState("");
 
   useEffect(() => {
-    const getProject = async (id) => {
+    const getUser = async (setUser) => {
       let config = {
         headers: {
           "x-auth-token": localStorage.getItem("token"),
         },
       };
-      const result = await axios.get(`/api/projects/${id}`, config);
-      setProject(result.data);
+
+      axios.get(`/api/students/${id}`, config).then((result) => {
+        setUser(result.data);
+      });
     };
-    getProject(id);
-  }, []);
+    getType(setType);
+    getUser(setStudent);
+  }, [id]);
 
   const handleApprove = async (e) => {
     e.preventDefault();
@@ -34,18 +34,17 @@ export default function ProjectInfo() {
     };
 
     await axios.put(
-      `/api/professors/projects`,
-      { project: { _id: project._id, name: project.name } },
+      `/api/professors/students`,
+      { student: { _id: student._id, name: student.name } },
       config
     );
   };
 
   return (
     <div>
-      {project.name + " " + project.owner.name}{" "}
       {type === "professor" ? (
         <Button variant='outlined' color='primary' onClick={handleApprove}>
-          I mentored this project
+          Approve student
         </Button>
       ) : (
         ""
@@ -53,3 +52,5 @@ export default function ProjectInfo() {
     </div>
   );
 }
+
+export default StudentProfile;
