@@ -55,8 +55,8 @@ function Dashboard() {
       {user.userType === "student" && (
         <Zoom in timeout={500} unmountOnExit>
           <Fab
-            color='primary'
-            aria-label='add'
+            color="primary"
+            aria-label="add"
             onClick={handleFabClick}
             className={classes.fab}
           >
@@ -65,7 +65,7 @@ function Dashboard() {
         </Zoom>
       )}
 
-      <Grid container component='main' classname={classes.content}>
+      <Grid container component="main" classname={classes.content}>
         <CssBaseline />
         <Grid item xs={4}>
           <UserCard user={user} />

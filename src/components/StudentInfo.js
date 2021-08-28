@@ -70,33 +70,33 @@ export default function StudentInfo(props) {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
+          aria-controls="panel1a-content"
+          id="panel1a-header"
         >
           <Typography className={classes.heading}>Projects</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TableContainer component={Paper}>
-            <Table aria-label='simple table'>
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Project</TableCell>
-                  <TableCell align='right'>Technologies</TableCell>
+                  <TableCell align="right">Technologies</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.user.projects.map((row) => (
+                {props.user.projects?.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell
-                      component='th'
-                      scope='row'
+                      component="th"
+                      scope="row"
                       onClick={(e) => {
                         history.push(`/project/${row._id}`);
                       }}
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align='right'>
+                    <TableCell align="right">
                       {row.technologies.join(", ")}
                     </TableCell>
                   </TableRow>
@@ -109,14 +109,14 @@ export default function StudentInfo(props) {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
+          aria-controls="panel1a-content"
+          id="panel1a-header"
         >
           <Typography className={classes.heading}>Skills</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <List dense={true}>
-            {props.user.skills.map((skill) => {
+            {props.user.skills?.map((skill) => {
               return (
                 <ListItem>
                   <ListItemText primary={skill} />
@@ -129,14 +129,14 @@ export default function StudentInfo(props) {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
+          aria-controls="panel1a-content"
+          id="panel1a-header"
         >
           <Typography className={classes.heading}>Recommended by</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <List dense={true}>
-            {props.user.professors.map((professor) => {
+            {props.user.professors?.map((professor) => {
               return (
                 <ListItem>
                   <ListItemText primary={professor.name} />
@@ -149,31 +149,31 @@ export default function StudentInfo(props) {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
+          aria-controls="panel1a-content"
+          id="panel1a-header"
         >
           <Typography className={classes.heading}>Extracurriculars</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TableContainer component={Paper}>
-            <Table aria-label='simple table'>
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Event</TableCell>
-                  <TableCell align='right'>Organizator</TableCell>
-                  <TableCell align='right'>Position</TableCell>
-                  <TableCell align='right'>Description</TableCell>
+                  <TableCell align="right">Organizator</TableCell>
+                  <TableCell align="right">Position</TableCell>
+                  <TableCell align="right">Description</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.user.projects.map((row) => (
+                {props.user.projects?.map((row) => (
                   <TableRow key={row.name}>
-                    <TableCell component='th' scope='row'>
+                    <TableCell component="th" scope="row">
                       {row.event}
                     </TableCell>
-                    <TableCell align='right'>{row.organization}</TableCell>
-                    <TableCell align='right'>{row.position}</TableCell>
-                    <TableCell align='right'>{row.description}</TableCell>
+                    <TableCell align="right">{row.organization}</TableCell>
+                    <TableCell align="right">{row.position}</TableCell>
+                    <TableCell align="right">{row.description}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

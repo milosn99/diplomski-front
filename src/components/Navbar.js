@@ -5,8 +5,12 @@ import {
   MenuItem,
   Toolbar,
   Menu,
+  Typography,
+  Button,
 } from "@material-ui/core";
-import React from "react";
+import MessageOutlinedIcon from "@material-ui/icons/MessageOutlined";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,11 +22,32 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
     transform: "translateX(-2%)",
   },
+  messenger: {
+    marginRight: theme.spacing(3),
+  },
+  home: {
+    marginRight: theme.spacing(3),
+  },
 }));
 
-function Navbar(props) {
+function Navbar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [avatar, setAvatar] = useState("");
+
+  useEffect(() => {
+    const getAvatar = async () => {
+      let config = {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      };
+
+      let result = await axios.get("/api/me/avatar", config);
+      setAvatar(result.data);
+    };
+    getAvatar();
+  }, []);
 
   const handleClick = (event) => {
     if (!anchorEl) setAnchorEl(event.currentTarget);
@@ -40,16 +65,25 @@ function Navbar(props) {
     window.location.reload(false);
   };
 
-  const handleEdit = () => {
-    history.push("/edit");
-  };
-
   return (
     <div className>
       <AppBar position="fixed" className={classes.navbar}>
         <Toolbar>
+          <Button
+            color="inherit"
+            className={classes.home}
+            onClick={(e) => history.push("/")}
+          >
+            Home
+          </Button>
+          <MessageOutlinedIcon
+            className={classes.messenger}
+            onClick={(e) => {
+              history.push("/messenger");
+            }}
+          />
           <Avatar
-            src={props.avatar}
+            src={`http://localhost:3001/${avatar}`}
             className={classes.menuButton}
             onClick={handleClick}
           />
@@ -61,8 +95,20 @@ function Navbar(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleEdit}>Edit profile</MenuItem>
+            <MenuItem
+              onClick={(e) => {
+                history.push("/me");
+              }}
+            >
+              Profile
+            </MenuItem>
+            <MenuItem
+              onClick={(e) => {
+                history.push("/edit");
+              }}
+            >
+              Edit profile
+            </MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>

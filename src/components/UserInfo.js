@@ -1,8 +1,6 @@
 import {
   Avatar,
-  Button,
   Card,
-  CardActions,
   CardContent,
   makeStyles,
   Typography,
@@ -90,34 +88,23 @@ function UserInfo(props) {
         <CardContent>
           <Avatar
             alt={props.user.name}
-            src={props.user.avatar}
+            src={`http://localhost:3001/${props.user.avatar}`}
             className={classes.large}
           />
         </CardContent>
         <CardContent>
           <Typography
             className={classes.title}
-            color='textSecondary'
+            color="textSecondary"
             gutterBottom
           >
             {props.user.name}
           </Typography>
-          <Typography variant='body2' className={classes.headline}>
+          <Typography variant="body2" className={classes.headline}>
             {props.user.headline || props.user.position || props.user.title}
           </Typography>
         </CardContent>
         <CardContent className={classes.table}>{content()}</CardContent>
-        <CardActions className={classes.editButton}>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={(e) => {
-              history.push("/edit");
-            }}
-          >
-            Edit profile
-          </Button>
-        </CardActions>
       </Card>
     </div>
   );

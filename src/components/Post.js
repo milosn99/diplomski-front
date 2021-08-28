@@ -60,11 +60,11 @@ export default function Post(props) {
       <div class={classes.user}>
         <Avatar
           alt={props.user.name}
-          src={props.user.avatar}
+          src={`http://localhost:3001/${props.user.avatar}`}
           className={classes.large}
         />
         <Typography
-          color='textSecondary'
+          color="textSecondary"
           gutterBottom
           className={classes.userText}
           onClick={handleUserNameClick}
@@ -72,7 +72,7 @@ export default function Post(props) {
           {props.user.name}
         </Typography>
         <Typography
-          color='textSecondary'
+          color="textSecondary"
           gutterBottom
           className={classes.userText}
         >
@@ -80,14 +80,14 @@ export default function Post(props) {
         </Typography>
       </div>
       <Divider />
-      <Typography color='text2' gutterBottom>
+      <Typography color="text2" gutterBottom>
         {props.data.content}
       </Typography>
 
       {props.data.thumbnail ? (
         <img
           alt={""}
-          src={props.data.thumbnail}
+          src={`http://localhost:3001/${props.data.thumbnail}`}
           width={300}
           className={classes.thumbnail}
         />

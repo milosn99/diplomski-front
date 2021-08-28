@@ -65,19 +65,19 @@ function UserCard(props) {
         <CardContent>
           <Typography
             className={classes.title}
-            color='textSecondary'
+            color="textSecondary"
             gutterBottom
           >
             {props.user.name}
           </Typography>
-          <Typography variant='body2' className={classes.headline}>
+          <Typography variant="body2" className={classes.headline}>
             {props.user.headline ||
               props.user.position ||
               props.user.title + " at " + props.user.department}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant='contained' onClick={handleClick} size='small'>
+          <Button variant="contained" onClick={handleClick} size="small">
             Visit profile
           </Button>
         </CardActions>
