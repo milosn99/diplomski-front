@@ -1,15 +1,5 @@
-import {
-  Button,
-  Chip,
-  FormControl,
-  Input,
-  InputLabel,
-  List,
-  makeStyles,
-  MenuItem,
-  Select,
-  TextField,
-} from "@material-ui/core";
+import { Button, Chip, List, makeStyles, TextField } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -34,14 +24,11 @@ function NewProject() {
 
   const history = useHistory();
 
-  const handleAddContributor = (e) => {
-    e.preventDefault();
-    if (e.target.value && !project.contributors.includes(e.target.value)) {
-      let temp = new Object(project);
-      temp.contributors.push(e.target.value);
-      setProject(temp);
-      setHelper(helper === 0 ? 1 : 0);
-    }
+  const handleAddContributor = (e, v) => {
+    let temp = project;
+    temp.contributors = v;
+    setProject(temp);
+    setHelper(helper === 0 ? 1 : 0);
   };
 
   const handleAddTech = (e) => {
@@ -96,37 +83,23 @@ function NewProject() {
         }}
       />
       <br />
-      <FormControl className={classes.formControl}>
-        <InputLabel id='demo-dialog-select-label'>Add contributor</InputLabel>
-        <Select
-          labelId='demo-dialog-select-label'
-          id='demo-dialog-select'
-          input={<Input />}
-          onChange={handleAddContributor}
-        >
-          <MenuItem value=''>
-            <em>None</em>
-          </MenuItem>
-          {students.map((item) => {
-            return <MenuItem value={item}>{item.name}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <List component='nav' aria-label='secondary mailbox folders'>
-        {project.contributors.map((item) => {
-          return (
-            <Chip
-              label={item.name}
-              onDelete={() => {
-                let temp = new Object(project);
-                temp.contributors.splice(temp.contributors.indexOf(item), 1);
-                setProject(temp);
-                setHelper(helper === 0 ? 1 : 0);
-              }}
-            />
-          );
-        })}
-      </List>
+      <Autocomplete
+        multiple
+        id='tags-outlined'
+        options={students}
+        getOptionLabel={(option) => option.name}
+        filterSelectedOptions
+        limitTags={2}
+        onChange={handleAddContributor}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant='outlined'
+            label='Add contributors'
+            placeholder='Contributors'
+          />
+        )}
+      />
       <TextField
         variant='outlined'
         margin='normal'
