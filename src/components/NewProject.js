@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewProject() {
+function NewProject(props) {
   const classes = useStyles();
   const [students, setStudents] = useState([{}]);
   const [project, setProject] = useState({
@@ -48,12 +48,12 @@ function NewProject() {
   return (
     <div>
       <TextField
-        variant='outlined'
-        margin='normal'
-        id='name'
-        label='Name'
-        name='name'
-        autoComplete='name'
+        variant="outlined"
+        margin="normal"
+        id="name"
+        label="Name"
+        name="name"
+        autoComplete="name"
         value={project.name}
         onChange={(e) => {
           let temp = new Object(project);
@@ -64,16 +64,16 @@ function NewProject() {
       />
       <br />{" "}
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         required
         fullWidth
-        id='content'
+        id="content"
         multiline
         maxRows={3}
-        label='Description'
-        name='content'
-        autoComplete='content'
+        label="Description"
+        name="content"
+        autoComplete="content"
         autoFocus
         onChange={(e) => {
           let temp = new Object(project);
@@ -85,7 +85,7 @@ function NewProject() {
       <br />
       <Autocomplete
         multiple
-        id='tags-outlined'
+        id="tags-outlined"
         options={students}
         getOptionLabel={(option) => option.name}
         filterSelectedOptions
@@ -94,31 +94,31 @@ function NewProject() {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant='outlined'
-            label='Add contributors'
-            placeholder='Contributors'
+            variant="outlined"
+            label="Add contributors"
+            placeholder="Contributors"
           />
         )}
       />
       <TextField
-        variant='outlined'
-        margin='normal'
-        id='skill'
-        label='Add skill'
-        name='skill'
-        autoComplete='skill'
+        variant="outlined"
+        margin="normal"
+        id="skill"
+        label="Add skill"
+        name="skill"
+        autoComplete="skill"
         value={techToAdd}
         onChange={(e) => setTech(e.target.value)}
       />
       <Button
-        type='submit'
-        variant='contained'
-        color='primary'
+        type="submit"
+        variant="contained"
+        color="primary"
         onClick={handleAddTech}
       >
         Add technology
       </Button>
-      <List component='nav' aria-label='secondary mailbox folders'>
+      <List component="nav" aria-label="secondary mailbox folders">
         {project.technologies.map((technology) => {
           return (
             <Chip
@@ -138,9 +138,9 @@ function NewProject() {
       </List>
       <Button
         fullWidth
-        type='submit'
-        variant='outlined'
-        color='primary'
+        type="submit"
+        variant="outlined"
+        color="primary"
         onClick={async (e) => {
           let config = {
             headers: {
@@ -150,7 +150,7 @@ function NewProject() {
 
           await axios.post("/api/projects/add", { project: project }, config);
 
-          history.push("/");
+          props.onPost();
         }}
       >
         Save project

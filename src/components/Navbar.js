@@ -5,10 +5,11 @@ import {
   MenuItem,
   Toolbar,
   Menu,
-  Typography,
   Button,
+  TextField,
 } from "@material-ui/core";
 import MessageOutlinedIcon from "@material-ui/icons/MessageOutlined";
+import { Autocomplete } from "@material-ui/lab";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -34,6 +35,7 @@ function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [avatar, setAvatar] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const getAvatar = async () => {
@@ -54,7 +56,7 @@ function Navbar() {
     else setAnchorEl(null);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
     setAnchorEl(null);
   };
 
@@ -62,13 +64,58 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     history.push("/");
-    window.location.reload(false);
+    window.location.reload();
+  };
+
+  const handleUpdateInput = async (e) => {
+    if (!e.target.value) {
+      setSuggestions([]);
+      return;
+    }
+    let config = {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+      params: {
+        name: e.target.value,
+      },
+    };
+
+    let result = await axios.get("/api/users/filter", config);
+    setSuggestions(result.data);
   };
 
   return (
     <div className>
       <AppBar position="fixed" className={classes.navbar}>
         <Toolbar>
+          <Autocomplete
+            options={suggestions}
+            freeSolo
+            getOptionLabel={(option) => option.name}
+            style={{ width: 300, background: "white" }}
+            onInputChange={handleUpdateInput}
+            onChange={(e, v) => {
+              switch (v?.userType) {
+                case "student":
+                  history.push(`/student/${v._id}`);
+                  return;
+                case "professor":
+                  history.push(`/professor/${v._id}`);
+                  return;
+                default:
+                  return;
+              }
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Search users"
+                placeholder="Users"
+              />
+            )}
+          />
           <Button
             color="inherit"
             className={classes.home}

@@ -67,12 +67,13 @@ export default function ProjectEdit() {
   return (
     <div>
       <TextField
-        variant='outlined'
-        margin='normal'
-        id='name'
-        label='Name'
-        name='name'
-        autoComplete='name'
+        shrink
+        variant="outlined"
+        margin="normal"
+        id="name"
+        label="Name"
+        name="name"
+        autoComplete="name"
         value={project.name}
         onChange={(e) => {
           let temp = new Object(project);
@@ -83,16 +84,17 @@ export default function ProjectEdit() {
       />
       <br />{" "}
       <TextField
-        variant='outlined'
-        margin='normal'
+        shrink
+        variant="outlined"
+        margin="normal"
         required
         fullWidth
-        id='content'
+        id="content"
         multiline
         maxRows={3}
-        label='Description'
-        name='content'
-        autoComplete='content'
+        label="Description"
+        name="content"
+        autoComplete="content"
         value={project.description}
         onChange={(e) => {
           let temp = new Object(project);
@@ -104,7 +106,7 @@ export default function ProjectEdit() {
       <br />
       <Autocomplete
         multiple
-        id='tags-outlined'
+        id="tags-outlined"
         options={students}
         getOptionLabel={(option) => option.name}
         filterSelectedOptions
@@ -113,31 +115,32 @@ export default function ProjectEdit() {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant='outlined'
-            label='Add contributors'
-            placeholder='Contributors'
+            variant="outlined"
+            label="Add contributors"
+            placeholder="Contributors"
           />
         )}
       />
       <TextField
-        variant='outlined'
-        margin='normal'
-        id='skill'
-        label='Add skill'
-        name='skill'
-        autoComplete='skill'
+        variant="outlined"
+        margin="normal"
+        id="skill"
+        label="Add skill"
+        name="skill"
+        autoComplete="skill"
         value={techToAdd}
+        shrink
         onChange={(e) => setTech(e.target.value)}
       />
       <Button
-        type='submit'
-        variant='contained'
-        color='primary'
+        type="submit"
+        variant="contained"
+        color="primary"
         onClick={handleAddTech}
       >
         Add technology
       </Button>
-      <List component='nav' aria-label='secondary mailbox folders'>
+      <List component="nav" aria-label="secondary mailbox folders">
         {project.technologies.map((technology) => {
           return (
             <Chip
@@ -156,10 +159,10 @@ export default function ProjectEdit() {
         })}
       </List>
       <Button
-        type='submit'
+        type="submit"
         fullWidth
-        variant='outlined'
-        color='primary'
+        variant="outlined"
+        color="primary"
         onClick={handleEditProject}
       >
         Edit project

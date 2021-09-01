@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewPost() {
+export default function NewPost(props) {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = useState(null);
   const history = useHistory();
@@ -40,7 +40,7 @@ export default function NewPost() {
     };
 
     if (!selectedFile) {
-      history.push("/");
+      props.onPost();
       return;
     }
 
@@ -50,45 +50,45 @@ export default function NewPost() {
       config
     );
 
-    history.push("/");
+    props.onPost();
   };
 
   return (
     <div>
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         required
         fullWidth
-        id='content'
+        id="content"
         multiline
-        maxRows={20}
-        label='Enter post content'
-        name='content'
-        autoComplete='content'
+        maxRows={5}
+        label="What's on your mind?"
+        name="content"
+        autoComplete="content"
         autoFocus
         onChange={(e) => setContent(e.target.value)}
       />
       <input
-        accept='image/*'
+        accept="image/*"
         className={classes.input}
-        id='thumbnail'
-        name='thumbnail'
-        type='file'
+        id="thumbnail"
+        name="thumbnail"
+        type="file"
         onChange={(e) => {
           setSelectedFile(e.target.files[0]);
         }}
       />
-      <label htmlFor='thumbnail'>
+      <label htmlFor="thumbnail">
         <IconButton
-          color='primary'
-          aria-label='upload picture'
-          component='span'
+          color="primary"
+          aria-label="upload picture"
+          component="span"
         >
           <PhotoCamera />
         </IconButton>
       </label>
-      <Button variant='contained' color='primary' onClick={handleUploadClick}>
+      <Button variant="contained" color="primary" onClick={handleUploadClick}>
         Post
       </Button>
     </div>

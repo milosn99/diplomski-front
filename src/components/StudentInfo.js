@@ -86,7 +86,7 @@ export default function StudentInfo(props) {
               </TableHead>
               <TableBody>
                 {props.user.projects?.map((row) => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.name} style={{ cursor: "pointer" }}>
                     <TableCell
                       component="th"
                       scope="row"

@@ -74,7 +74,7 @@ export default function Login() {
       .then((res) => {
         setBadLogin(false);
         localStorage.setItem("token", res.data);
-        window.location.reload(false);
+        window.location.reload();
       })
       .catch((err) => {
         setMessage(err.response.data);

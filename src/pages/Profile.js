@@ -37,14 +37,14 @@ function Profile() {
 
   return (
     <div>
-      <Grid container component='main' classname={classes.content}>
+      <Grid container component="main" classname={classes.content}>
         <CssBaseline />
         <Grid item xs={1}></Grid>
         <Grid item xs={5}>
           <UserInfo user={user} />
         </Grid>
         <Grid item xs={5} classname={classes.feed}>
-          <Feed data={data} />
+          <Feed data={data} currentUser={user._id} />
         </Grid>
         <Grid item xs={1}></Grid>
       </Grid>
