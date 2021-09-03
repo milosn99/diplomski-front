@@ -10,6 +10,8 @@ import ProjectEdit from "./pages/ProjectEdit";
 import ProjectInfo from "./pages/ProjectInfo";
 import StudentProfile from "./pages/StudentProfile";
 import SearchStudents from "./pages/SearchStudents";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -40,6 +42,13 @@ function App() {
           </Route>
           <Route exact path="/search">
             <SearchStudents />
+          </Route>
+          <Route exact path="/admin">
+            {localStorage.getItem("token") ? (
+              <AdminDashboard />
+            ) : (
+              <AdminLogin />
+            )}
           </Route>
         </Switch>
       </div>

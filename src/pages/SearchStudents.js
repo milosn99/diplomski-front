@@ -122,6 +122,7 @@ function SearchStudents() {
             <TableRow>
               <TableCell>Student name</TableCell>
               <TableCell align="right">Year</TableCell>
+              <TableCell align="right">Recommended by</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -136,6 +137,9 @@ function SearchStudents() {
                   <div style={{ marginLeft: "10px" }}>{row.name}</div>
                 </TableCell>
                 <TableCell align="right">{row.year}</TableCell>
+                <TableCell align="right">
+                  {row.professors.map((p) => p.name)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
