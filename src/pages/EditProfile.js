@@ -1,4 +1,4 @@
-import { IconButton } from "@material-ui/core";
+import { CssBaseline, Grid, IconButton } from "@material-ui/core";
 import {
   Button,
   Chip,
@@ -15,6 +15,7 @@ import {
   Select,
   Snackbar,
   TextField,
+  Paper,
 } from "@material-ui/core";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import Alert from "@material-ui/lab/Alert";
@@ -23,11 +24,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import getUser from "../helper/getUser";
 import NewProject from "../components/NewProject";
+import ProjectEdit from "./ProjectEdit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    maxWidth: 360,
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
@@ -63,6 +64,7 @@ function EditProfile(props) {
   const [helper, setHelper] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [newProjectOpen, setNewProjectOpen] = useState(false);
+  const [editProjectOpen, setEditProjectOpen] = useState(false);
 
   useEffect(() => {
     getUser(setUser);
@@ -86,8 +88,7 @@ function EditProfile(props) {
 
   const handleEditProject = () => {
     if (project) {
-      let path = `/project/${project._id}/edit`;
-      history.push(path);
+      setEditProjectOpen(true);
     }
   };
 
@@ -122,8 +123,6 @@ function EditProfile(props) {
   };
 
   const handleAddProject = (e) => {
-    // e.preventDefault();
-    // history.push("/projects/new");
     setNewProjectOpen(true);
   };
 
@@ -158,165 +157,239 @@ function EditProfile(props) {
 
   return (
     <div>
-      <input
-        accept="image/*"
-        className={classes.input}
-        id="avatar"
-        name="avatar"
-        type="file"
-        onChange={(e) => {
-          setSelectedFile(e.target.files[0]);
-        }}
-      />
-      <label htmlFor="avatar">
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-        >
-          <PhotoCamera />
-        </IconButton>
-      </label>
-      <div className={classes.root}>
-        <Snackbar
-          open={snackBarOpen}
-          autoHideDuration={3000}
-          onClose={() => setSnackBarOpen(false)}
-        >
-          <Alert severity={severity}>{message}</Alert>
-        </Snackbar>
-        <List component="nav" aria-label="secondary mailbox folders">
-          {user.skills.map((skill) => {
-            return (
-              <Chip
-                label={skill}
-                onDelete={() => {
-                  let temp = new Object(user);
-                  temp.skills.splice(temp.skills.indexOf(skill), 1);
-                  setUser(temp);
-                  setHelper(helper === 0 ? 1 : 0);
+      <CssBaseline />
+      <Grid container component="main" classname={classes.content}>
+        <Grid item xs={3}></Grid>
+        <Grid item xs={6}>
+          <Paper elevation={2} style={{ padding: 10, marginTop: 10 }}>
+            <div className={classes.root}>
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="avatar"
+                name="avatar"
+                type="file"
+                onChange={(e) => {
+                  setSelectedFile(e.target.files[0]);
                 }}
               />
-            );
-          })}
-        </List>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          id="skill"
-          label="Add skill"
-          name="skill"
-          autoComplete="skill"
-          value={skillToAdd}
-          onChange={(e) => setSkill(e.target.value)}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleAddSkill}
-        >
-          Add skill
-        </Button>
-        <List component="nav" aria-label="secondary mailbox folders">
-          {user.interests.map((interest) => {
-            return (
-              <Chip
-                label={interest}
-                onDelete={() => {
-                  let temp = new Object(user);
-                  temp.interests.splice(temp.interests.indexOf(interest), 1);
-                  setUser(temp);
-                  setHelper(helper === 0 ? 1 : 0);
-                }}
-              />
-            );
-          })}
-        </List>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          id="interest"
-          label="Add interest"
-          name="interest"
-          autoComplete="interest"
-          value={interestToAdd}
-          onChange={(e) => setInterest(e.target.value)}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleAddInterest}
-        >
-          Add interest
-        </Button>
-      </div>
-      <div lassName={classes.root}>
-        <Button variant="outlined" color="primary" onClick={handleAddProject}>
-          Add new project
-        </Button>
-        <Dialog open={newProjectOpen} onClose={(e) => setNewProjectOpen(false)}>
-          <DialogTitle>New project</DialogTitle>
-          <DialogContent>
-            <NewProject
-              onPost={(e) => {
-                setNewProjectOpen(false);
-                getUser(setUser);
-              }}
-            />
-          </DialogContent>
-        </Dialog>
-        <Dialog open={projectDialogOpen} onClose={handleClose}>
-          <DialogTitle>Choose a project</DialogTitle>
-          <DialogContent>
-            <form className={classes.container}>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-dialog-select-label">Project</InputLabel>
-                <Select
-                  labelId="demo-dialog-select-label"
-                  id="demo-dialog-select"
-                  value={project}
-                  onChange={handleChange}
-                  input={<Input />}
+              <label htmlFor="avatar">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {user.projects.map((item) => {
-                    return <MenuItem value={item}>{item.name}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
+                  <PhotoCamera />
+                </IconButton>
+              </label>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="headline"
+                type="headline"
+                id="headline"
+                value={user.headline || ""}
+                label="Headline"
+                onChange={(e) => {
+                  let temp = user;
+                  temp.headline = e.target.value;
+                  setUser(temp);
+                  setHelper(helper === 0 ? 1 : 0);
+                }}
+              />
+              <Snackbar
+                open={snackBarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackBarOpen(false)}
+              >
+                <Alert severity={severity}>{message}</Alert>
+              </Snackbar>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Paper style={{ flex: 1, margin: 5, padding: 5 }} elevation={1}>
+                  <List component="nav" aria-label="secondary mailbox folders">
+                    {user.skills.map((skill) => {
+                      return (
+                        <Chip
+                          label={skill}
+                          onDelete={() => {
+                            let temp = new Object(user);
+                            temp.skills.splice(temp.skills.indexOf(skill), 1);
+                            setUser(temp);
+                            setHelper(helper === 0 ? 1 : 0);
+                          }}
+                        />
+                      );
+                    })}
+                  </List>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    id="skill"
+                    label="Add skill"
+                    name="skill"
+                    autoComplete="skill"
+                    value={skillToAdd}
+                    onChange={(e) => setSkill(e.target.value)}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={handleAddSkill}
+                  >
+                    Add skill
+                  </Button>
+                </Paper>
+                <Paper style={{ flex: 1, margin: 5, padding: 5 }} elevation={1}>
+                  <List component="nav" aria-label="secondary mailbox folders">
+                    {user.interests.map((interest) => {
+                      return (
+                        <Chip
+                          label={interest}
+                          onDelete={() => {
+                            let temp = new Object(user);
+                            temp.interests.splice(
+                              temp.interests.indexOf(interest),
+                              1
+                            );
+                            setUser(temp);
+                            setHelper(helper === 0 ? 1 : 0);
+                          }}
+                        />
+                      );
+                    })}
+                  </List>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    id="interest"
+                    label="Add interest"
+                    name="interest"
+                    autoComplete="interest"
+                    value={interestToAdd}
+                    onChange={(e) => setInterest(e.target.value)}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={handleAddInterest}
+                  >
+                    Add interest
+                  </Button>
+                </Paper>
+              </div>
+            </div>
+            <div className={classes.root}>
+              <Button
+                style={{ flex: 1 }}
+                variant="outlined"
+                color="primary"
+                onClick={handleAddProject}
+              >
+                Add new project
+              </Button>
+              <Dialog
+                open={newProjectOpen}
+                onClose={(e) => setNewProjectOpen(false)}
+              >
+                <DialogTitle>New project</DialogTitle>
+                <DialogContent>
+                  <NewProject
+                    onPost={(e) => {
+                      setNewProjectOpen(false);
+                      getUser(setUser);
+                    }}
+                  />
+                </DialogContent>
+              </Dialog>
+              <Dialog open={projectDialogOpen} onClose={handleClose}>
+                <DialogTitle>Choose a project</DialogTitle>
+                <DialogContent>
+                  <form className={classes.container}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="demo-dialog-select-label">
+                        Project
+                      </InputLabel>
+                      <Select
+                        labelId="demo-dialog-select-label"
+                        id="demo-dialog-select"
+                        value={project}
+                        onChange={handleChange}
+                        input={<Input />}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {user.projects.map((item) => {
+                          return <MenuItem value={item}>{item.name}</MenuItem>;
+                        })}
+                      </Select>
+                    </FormControl>
+                  </form>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={handleEditProject} color="primary">
+                    Edit
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={editProjectOpen}
+                onClose={(e) => setEditProjectOpen(false)}
+              >
+                <DialogTitle>Edit project</DialogTitle>
+                <DialogContent>
+                  <ProjectEdit
+                    id={project?._id}
+                    onPost={(e) => {
+                      setNewProjectOpen(false);
+                      getUser(setUser);
+                    }}
+                  />
+                </DialogContent>
+              </Dialog>
+              <Button
+                style={{ flex: 1 }}
+                variant="outlined"
+                color="primary"
+                onClick={handleClickOpen}
+              >
+                Edit an existing project
+              </Button>
+            </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="outlined"
+              color="primary"
+              className={classes.submit}
+              onClick={handleUpdateStudent}
+            >
+              Save changes
             </Button>
-            <Button onClick={handleEditProject} color="primary">
-              Edit
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Edit an existing project
-        </Button>
-      </div>
-      <Button
-        type="submit"
-        fullWidth
-        variant="outlined"
-        color="primary"
-        className={classes.submit}
-        onClick={handleUpdateStudent}
-      >
-        Save changes
-      </Button>
+          </Paper>
+        </Grid>
+        <Grid item xs={3}></Grid>
+      </Grid>
     </div>
   );
 }

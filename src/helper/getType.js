@@ -1,15 +1,14 @@
 import axios from "axios";
 
-const getType = (setType) => {
+const getType = async (setType) => {
   let config = {
     headers: {
       "x-auth-token": localStorage.getItem("token"),
     },
   };
 
-  axios.get("/api/me/type", config).then((result) => {
-    setType(result.data.userType);
-  });
+  const result = await axios.get("/api/me/type", config);
+  setType(result.data.userType);
 };
 
 export default getType;

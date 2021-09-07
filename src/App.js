@@ -6,9 +6,8 @@ import Login from "./pages/Login.js";
 import Messenger from "./pages/Messenger";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
-import ProjectEdit from "./pages/ProjectEdit";
 import ProjectInfo from "./pages/ProjectInfo";
-import StudentProfile from "./pages/StudentProfile";
+import UserProfile from "./pages/UserProfile";
 import SearchStudents from "./pages/SearchStudents";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -31,11 +30,8 @@ function App() {
           <Route exact path="/project/:id">
             <ProjectInfo />
           </Route>
-          <Route exact path="/project/:id/edit">
-            <ProjectEdit />
-          </Route>
-          <Route exact path="/student/:id">
-            <StudentProfile />
+          <Route exact path="/user/:id">
+            <UserProfile />
           </Route>
           <Route exact path="/messenger">
             <Messenger />

@@ -14,6 +14,7 @@ import StudentInfo from "./StudentInfo";
 const useStyles = makeStyles((theme) => ({
   wrap: {
     display: "flex",
+    width: "95%",
     alignItems: "center",
     justifyContent: "flex-end",
     marginRight: theme.spacing(3),
@@ -58,7 +59,7 @@ function UserInfo(props) {
   const history = useHistory();
 
   const content = () => {
-    switch (props.user.userType) {
+    switch (props.user?.userType) {
       case "student":
         return (
           <div>

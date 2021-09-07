@@ -48,6 +48,7 @@ function NewProject(props) {
   return (
     <div>
       <TextField
+        fullWidth
         variant="outlined"
         margin="normal"
         id="name"
@@ -100,24 +101,35 @@ function NewProject(props) {
           />
         )}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        id="skill"
-        label="Add skill"
-        name="skill"
-        autoComplete="skill"
-        value={techToAdd}
-        onChange={(e) => setTech(e.target.value)}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={handleAddTech}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        Add technology
-      </Button>
+        <TextField
+          style={{ flex: 1, marginRight: 5 }}
+          variant="outlined"
+          margin="normal"
+          id="technology"
+          label="Add technology"
+          name="technology"
+          autoComplete="technology"
+          value={techToAdd}
+          onChange={(e) => setTech(e.target.value)}
+        />
+        <Button
+          style={{ flex: 1, marginLeft: 5 }}
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick={handleAddTech}
+        >
+          Add technology
+        </Button>
+      </div>
       <List component="nav" aria-label="secondary mailbox folders">
         {project.technologies.map((technology) => {
           return (

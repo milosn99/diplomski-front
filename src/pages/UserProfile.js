@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Feed from "../components/Feed";
 import UserInfo from "../components/UserInfo";
-import getType from "../helper/getType";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
   feed: {
@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StudentProfile() {
-  const [student, setStudent] = useState({});
+function UserProfile() {
+  const [user, setUser] = useState(null);
   const { id } = useParams();
   const [type, setType] = useState("");
   const [data, setData] = useState([]);
@@ -29,11 +29,11 @@ function StudentProfile() {
         },
       };
 
-      axios.get(`/api/students/${id}`, config).then((result) => {
-        setStudent(result.data);
+      axios.get(`/api/users/${id}`, config).then((result) => {
+        setUser(result.data);
       });
     };
-    getType(setType);
+    setType(jwt_decode(localStorage.getItem("token")).userType);
     getUser();
   }, [id]);
 
@@ -62,7 +62,7 @@ function StudentProfile() {
 
     await axios.put(
       `/api/professors/students`,
-      { student: { _id: student._id, name: student.name } },
+      { student: { _id: user._id, name: user.name } },
       config
     );
   };
@@ -72,18 +72,33 @@ function StudentProfile() {
       <Grid container component="main" classname={classes.content}>
         <CssBaseline />
         <Grid item xs={1}></Grid>
-        <Grid item xs={5}>
-          <UserInfo user={student} />
-          {type === "professor" ? (
-            <Button variant="outlined" color="primary" onClick={handleApprove}>
+        <Grid
+          item
+          xs={5}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {user && <UserInfo user={user} />}
+          {type === "professor" && user?.userType === "student" && (
+            <Button
+              variant="outlined"
+              // fullWidth
+              color="primary"
+              onClick={handleApprove}
+              alignSelf="center"
+            >
               Approve student
             </Button>
-          ) : (
-            ""
           )}
         </Grid>
         <Grid item xs={5} classname={classes.feed}>
-          <Feed data={data} />
+          <Feed
+            data={data}
+            currentUser={jwt_decode(localStorage.getItem("token"))._id}
+          />
         </Grid>
         <Grid item xs={1}></Grid>
       </Grid>
@@ -91,4 +106,4 @@ function StudentProfile() {
   );
 }
 
-export default StudentProfile;
+export default UserProfile;

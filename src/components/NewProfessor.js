@@ -4,21 +4,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormHelperText,
-  InputLabel,
-  NativeSelect,
   TextField,
 } from "@material-ui/core";
 import axios from "axios";
 import React, { useState } from "react";
 
-function NewStudent(props) {
+function NewProfessor(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [index, setIndex] = useState("");
-  const [year, setYear] = useState(null);
-  const [sp, setSP] = useState("");
+  const [title, setTitle] = useState("");
+  const [department, setDepartment] = useState("");
 
   const handleAdd = async () => {
     let config = {
@@ -27,16 +23,15 @@ function NewStudent(props) {
       },
     };
     const data = {
-      student: {
+      professor: {
         email,
         password,
         name,
-        year,
-        indexNumber: index,
-        studyProgram: sp,
+        title,
+        department,
       },
     };
-    await axios.post(`api/students/new`, data, config);
+    await axios.post(`api/professors/new`, data, config);
     props.onPost();
   };
 
@@ -85,54 +80,23 @@ function NewStudent(props) {
               margin="normal"
               required
               fullWidth
-              name="index"
-              label="Index"
-              type="index"
-              id="index"
-              onChange={(e) => setIndex(e.target.value)}
+              name="title"
+              label="Title"
+              type="title"
+              id="title"
+              onChange={(e) => setTitle(e.target.value)}
             />
-            <InputLabel htmlFor="type-native-helper">Year</InputLabel>
-            <NativeSelect
+            <TextField
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              value={year}
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-              inputProps={{
-                name: "type",
-                id: "type-native-helper",
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-            </NativeSelect>
-            <FormHelperText>Choose year</FormHelperText>
-            <InputLabel htmlFor="sp-native-helper">Program</InputLabel>
-            <NativeSelect
-              required
-              fullWidth
-              value={sp}
-              onChange={(e) => {
-                setSP(e.target.value);
-              }}
-              inputProps={{
-                name: "sp",
-                id: "sp-native-helper",
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={"Informacioni sistemi i tehnologije"}>Isit</option>
-              <option value={"Menadzment i organizacija"}>Mio</option>
-              <option value={"Operacioni menadzment"}>OM</option>
-              <option value={"Menadzment kvaliteta i standardizacija"}>
-                MKS
-              </option>
-            </NativeSelect>
-            <FormHelperText>Choose year</FormHelperText>
+              name="department"
+              label="Department"
+              type="department"
+              id="department"
+              onChange={(e) => setDepartment(e.target.value)}
+            />
           </form>
         </DialogContent>
         <DialogActions>
@@ -145,4 +109,4 @@ function NewStudent(props) {
   );
 }
 
-export default NewStudent;
+export default NewProfessor;

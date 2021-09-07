@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(9),
     height: theme.spacing(9),
+    fontSize: "3rem",
   },
   headline: {
     textAlign: "center",

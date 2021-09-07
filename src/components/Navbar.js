@@ -13,6 +13,7 @@ import { Autocomplete } from "@material-ui/lab";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -36,19 +37,13 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [avatar, setAvatar] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [type, setType] = useState("");
 
   useEffect(() => {
-    const getAvatar = async () => {
-      let config = {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      };
-
-      let result = await axios.get("/api/me/avatar", config);
-      setAvatar(result.data);
-    };
-    getAvatar();
+    setAvatar(
+      `public/avatars/${jwt_decode(localStorage.getItem("token"))._id}.jpg`
+    );
+    setType(jwt_decode(localStorage.getItem("token")).userType);
   }, []);
 
   const handleClick = (event) => {
@@ -96,15 +91,9 @@ function Navbar() {
             style={{ width: 300, background: "white" }}
             onInputChange={handleUpdateInput}
             onChange={(e, v) => {
-              switch (v?.userType) {
-                case "student":
-                  history.push(`/student/${v._id}`);
-                  return;
-                case "professor":
-                  history.push(`/professor/${v._id}`);
-                  return;
-                default:
-                  return;
+              if (v && v._id) {
+                history.push(`/user/${v?._id}`);
+                window.location.reload();
               }
             }}
             renderInput={(params) => (
@@ -149,13 +138,24 @@ function Navbar() {
             >
               Profile
             </MenuItem>
-            <MenuItem
-              onClick={(e) => {
-                history.push("/edit");
-              }}
-            >
-              Edit profile
-            </MenuItem>
+            {type === "student" && (
+              <MenuItem
+                onClick={(e) => {
+                  history.push("/edit");
+                }}
+              >
+                Edit profile
+              </MenuItem>
+            )}
+            {type !== "student" && (
+              <MenuItem
+                onClick={(e) => {
+                  history.push("/search");
+                }}
+              >
+                Search students
+              </MenuItem>
+            )}
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>

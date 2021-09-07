@@ -5,8 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import getAllStudents from "../helper/getAllStudents";
 
-export default function ProjectEdit() {
-  const { id } = useParams();
+export default function ProjectEdit(props) {
   const [project, setProject] = useState({
     owner: {},
     contributors: [],
@@ -51,8 +50,8 @@ export default function ProjectEdit() {
   };
 
   useEffect(() => {
-    getProject(id);
-  }, [id]);
+    getProject(props.id);
+  }, []);
 
   const handleEditProject = async () => {
     let config = {
@@ -60,21 +59,27 @@ export default function ProjectEdit() {
         "x-auth-token": localStorage.getItem("token"),
       },
     };
-    const result = await axios.put(`/api/projects/edit/${id}`, project, config);
+    const result = await axios.put(
+      `/api/projects/edit/${props.id}`,
+      project,
+      config
+    );
     setProject(result.data);
+    props.onPost();
   };
 
   return (
     <div>
       <TextField
         shrink
+        fullWidth
         variant="outlined"
         margin="normal"
         id="name"
         label="Name"
         name="name"
         autoComplete="name"
-        value={project.name}
+        value={project.name || ""}
         onChange={(e) => {
           let temp = new Object(project);
           temp.name = e.target.value;
@@ -95,7 +100,7 @@ export default function ProjectEdit() {
         label="Description"
         name="content"
         autoComplete="content"
-        value={project.description}
+        value={project.description || ""}
         onChange={(e) => {
           let temp = new Object(project);
           temp.description = e.target.value;
@@ -121,25 +126,36 @@ export default function ProjectEdit() {
           />
         )}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        id="skill"
-        label="Add skill"
-        name="skill"
-        autoComplete="skill"
-        value={techToAdd}
-        shrink
-        onChange={(e) => setTech(e.target.value)}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={handleAddTech}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        Add technology
-      </Button>
+        <TextField
+          style={{ flex: 1, marginRight: 5 }}
+          variant="outlined"
+          margin="normal"
+          id="technology"
+          label="Add technology"
+          name="technology"
+          autoComplete="technology"
+          value={techToAdd}
+          shrink
+          onChange={(e) => setTech(e.target.value)}
+        />
+        <Button
+          style={{ flex: 1, marginLeft: 5 }}
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick={handleAddTech}
+        >
+          Add technology
+        </Button>
+      </div>
       <List component="nav" aria-label="secondary mailbox folders">
         {project.technologies.map((technology) => {
           return (

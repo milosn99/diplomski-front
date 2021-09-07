@@ -41,7 +41,7 @@ function Profile() {
         <CssBaseline />
         <Grid item xs={1}></Grid>
         <Grid item xs={5}>
-          <UserInfo user={user} />
+          <UserInfo user={user} style={{ marginRight: 10 }} />
         </Grid>
         <Grid item xs={5} classname={classes.feed}>
           <Feed data={data} currentUser={user._id} />

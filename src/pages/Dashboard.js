@@ -97,7 +97,7 @@ function Dashboard() {
         </div>
       )}
 
-      <Grid container component="main" classname={classes.content}>
+      <Grid container component="main" className={classes.content}>
         <CssBaseline />
         <Grid item xs={3}>
           <UserCard user={user} />

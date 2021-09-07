@@ -61,15 +61,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Post(props) {
   const [elevation, setElevation] = useState(2);
   const [likes, setLikes] = useState(props.data.likes.length);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(
+    props.data.likes.includes(props.currentUser)
+  );
   const classes = useStyles();
   const time = moment(new Date(props.data.timeStamp)).fromNow();
 
   const history = useHistory();
-
-  useEffect(() => {
-    setIsLiked(props.data.likes.includes(props.currentUser));
-  }, [props.data.likes]);
 
   const handleUserNameClick = (e) => {
     e.preventDefault();

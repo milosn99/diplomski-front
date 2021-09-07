@@ -75,7 +75,7 @@ function SearchStudents() {
     >
       <div style={{ display: "flex", flexDirection: "row" }}>
         <FormControl>
-          <InputLabel htmlFor="type-native-helper">Type</InputLabel>
+          <InputLabel htmlFor="type-native-helper">Year</InputLabel>
           <NativeSelect
             required
             fullWidth
@@ -127,7 +127,13 @@ function SearchStudents() {
           </TableHead>
           <TableBody>
             {students?.map((row) => (
-              <TableRow key={row.name}>
+              <TableRow
+                key={row.name}
+                onClick={(e) => {
+                  history.push(`/student/${row._id}`);
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 <TableCell
                   component="th"
                   scope="row"
